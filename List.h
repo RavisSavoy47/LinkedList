@@ -125,6 +125,7 @@ inline void List<T>::destroy()
 template<typename T>
 inline const Iterator<T> List<T>::begin()
 {
+
 	return Iterator<T>();
 }
 
@@ -187,7 +188,7 @@ inline bool List<T>::getData(Iterator<T>& iter, int index)
 template<typename T>
 inline int List<T>::getLength() const
 {
-	return 0;
+	return m_nodeCount;
 }
 
 template<typename T>
@@ -199,4 +200,5 @@ inline const List<T>& List<T>::operator=(const List<T>& otherList)
 template<typename T>
 inline void List<T>::sort()
 {
+	//bubble scort
 }
