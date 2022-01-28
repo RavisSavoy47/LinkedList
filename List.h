@@ -1,6 +1,5 @@
 #pragma once
 #include "Iterator.h"
-#include "Node.h"
 
 template <typename T>
 class List
@@ -105,61 +104,80 @@ private:
 template<typename T>
 inline List<T>::List()
 {
+	m_nodeCount = 0;
+	m_first = nullptr;
+	m_last = nullptr;
 }
 
 template<typename T>
 inline List<T>::List(const List<T>& other)
 {
+	
 }
 
 template<typename T>
 inline List<T>::~List()
 {
+	destroy();
 }
 
 template<typename T>
 inline void List<T>::destroy()
 {
+	for (Node<T>* iter = m_first; iter != nullptr;)
+	{
+		Node<T>* temp = iter;
+		iter = iter->next;
+		delete temp;
+	}
 }
 
 template<typename T>
 inline const Iterator<T> List<T>::begin()
 {
-
-	return Iterator<T>();
+	return Iterator<T>(m_first);
 }
 
 template<typename T>
 inline const Iterator<T> List<T>::end()
 {
-	return Iterator<T>();
+	return Iterator<T>(m_last->next);
 }
 
 template<typename T>
 inline bool List<T>::contains(const T object) const
 {
+	for (Iterator<T> iter = begin(); iter != end(); ++iter)
+	{
+		
+	}
+
 	return false;
 }
 
 template<typename T>
 inline void List<T>::pushFront(const T& value)
 {
+
 }
 
 template<typename T>
 inline void List<T>::pushBack(const T& value)
 {
+
 }
 
 template<typename T>
 inline bool List<T>::insert(const T& value, int index)
 {
+
 	return false;
 }
 
 template<typename T>
 inline bool List<T>::remove(const T& value)
 {
+
 	return false;
 }
 
