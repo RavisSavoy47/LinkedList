@@ -1,5 +1,6 @@
 #pragma once
 #include "Iterator.h"
+#include <iostream>
 
 template <typename T>
 class List
@@ -18,13 +19,13 @@ public:
 	/// Returns an iterator pointing to the first node in the list
 	/// </summary>
 	/// <returns></returns>
-	const Iterator<T> begin();
+	const Iterator<T> begin() const;
 
 	/// <summary>
 	/// returns the next item after the last node in the list
 	/// </summary>
 	/// <returns></returns>
-	const Iterator<T> end();
+	const Iterator<T> end() const;
 
 	/// <summary>
 	/// checks to see if the given item is in the list
@@ -130,16 +131,18 @@ inline void List<T>::destroy()
 		iter = iter->next;
 		delete temp;
 	}
+	
+	intialize();
 }
 
 template<typename T>
-inline const Iterator<T> List<T>::begin()
+inline const Iterator<T> List<T>::begin() const
 {
 	return Iterator<T>(m_first);
 }
 
 template<typename T>
-inline const Iterator<T> List<T>::end()
+inline const Iterator<T> List<T>::end() const
 {
 	return Iterator<T>(m_last->next);
 }
@@ -149,7 +152,8 @@ inline bool List<T>::contains(const T object) const
 {
 	for (Iterator<T> iter = begin(); iter != end(); ++iter)
 	{
-		
+		if (*iter == object)
+			return true;
 	}
 
 	return false;
@@ -158,13 +162,25 @@ inline bool List<T>::contains(const T object) const
 template<typename T>
 inline void List<T>::pushFront(const T& value)
 {
+	Node<T>* node = new Node<T>(value);
 
+	m_first->previous = node;
+	node->next = m_first;
+	m_first = node;
+
+	m_nodeCount++;
 }
 
 template<typename T>
 inline void List<T>::pushBack(const T& value)
 {
+	Node<T>* node = new Node<T>(value);
 
+	m_last->previous = node;
+	node->next = m_last;
+	m_last = node;
+
+	m_nodeCount++;
 }
 
 template<typename T>
@@ -184,17 +200,26 @@ inline bool List<T>::remove(const T& value)
 template<typename T>
 inline void List<T>::print() const
 {
+	if (m_nodeCount <= 0) return;
+
+	for (Iterator<T> iter = begin(); iter != end(); ++iter)
+	{
+		std::cout << *iter << std::endl;
+	}
 }
 
 template<typename T>
 inline void List<T>::intialize()
 {
+	m_nodeCount = 0;
+	m_first = nullptr;
+	m_last = nullptr;
 }
 
 template<typename T>
 inline bool List<T>::isEmpty() const
 {
-	return false;
+	return m_nodeCount <= 0;
 }
 
 template<typename T>
