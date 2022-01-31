@@ -12,6 +12,9 @@ public:
 	T data;
 };
 
+/// <summary>
+/// sets the next and previous to a null pointer
+/// </summary>
 template<typename T>
 inline Node<T>::Node()
 {
@@ -19,6 +22,10 @@ inline Node<T>::Node()
 	previous = nullptr;
 }
 
+/// <summary>
+/// sets the next and previous to a null pointer
+/// sets the data to be the values
+/// </summary>
 template<typename T>
 inline Node<T>::Node(T value)
 {
