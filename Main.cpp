@@ -12,7 +12,15 @@ int main()
 	list.pushFront(56);
 	list.pushFront(46);
 
-	
+	list.remove(56);
+	list.remove(1);
+	list.remove(10);
+	list.remove(12);
+	list.remove(6);
+	list.remove(4);
+	list.remove(20);
+	list.remove(46);
+	list.remove(46);
+	list.sort();
 	list.print();
-	
 }
