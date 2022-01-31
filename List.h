@@ -188,23 +188,19 @@ inline bool List<T>::contains(const T object) const
 template<typename T>
 inline void List<T>::pushFront(const T& value)
 {
-	/// <summary>
-	/// creates a new node
-	/// sets the first's previous to be node
-	/// sets the node's next to be first 
-	/// sets node to be first
-	/// </summary>
 	Node<T>* node = new Node<T>(value);
 
+	//sets the node next to be first
 	if (m_first != nullptr)
-	{
-		m_first->previous = node;
 		node->next = m_first;
-	}
 
 	m_first = node;
 
-	if (m_last != nullptr) 
+	//sets nodes nexts previous to be node
+	if (m_first != nullptr)
+		node->next->previous = node;
+
+	else
 		m_last = node;
 
 	m_nodeCount++;
@@ -216,25 +212,21 @@ inline void List<T>::pushFront(const T& value)
 template<typename T>
 inline void List<T>::pushBack(const T& value)
 {
-	/// <summary>
-	/// creates a new node
-	/// sets the last's previous to be the node
-	/// sets the node's next to be last
-	/// sets last to be the node
-	/// </summary>
 	Node<T>* node = new Node<T>(value);
 
+	//sets the nodes previous to be last
 	if (m_last != nullptr)
-	{
-		m_last->next = node;
 		node->previous = m_last;
-	}
 
 	m_last = node;
 
+	//sets nodes previous next to be node
 	if (m_first != nullptr)
-		m_first = node;
+		node->previous->next = node;
 
+	else
+		m_first = node;
+		
 	m_nodeCount++;
 }
 
@@ -414,11 +406,28 @@ inline const List<T>& List<T>::operator=(const List<T>& otherList)
 	m_last = otherList.m_last;
 }
 
+/// <summary>
+/// sort the node count by bubble sort
+/// </summary>
 template<typename T>
 inline void List<T>::sort()
 {
 	Node<T>* currentNode = m_first;
+	Node<T>* tempNode = new Node<T>;
+	for (int i = 0; i < m_nodeCount - 1; i++)
+	{
+		currentNode = m_first;
 
-	//bubble scort
+		for (int j = 0; j < m_nodeCount - 1; j++)
+		{
+			if (currentNode->next->data < currentNode->data)
+			{
+				tempNode->data = currentNode->next->data;
+				currentNode->next->data = currentNode->data;
+				currentNode->data = tempNode->data;
+			}
+			currentNode = currentNode->next;
+		}
+	}
 	
 }

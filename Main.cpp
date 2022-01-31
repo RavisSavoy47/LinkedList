@@ -4,9 +4,15 @@ int main()
 {
 	List<int> list = List<int>();
 
-	list.pushFront(12);
+	list.pushBack(12);
 	list.pushBack(10);
 	list.pushFront(4);
 	list.pushFront(6);
+	list.insert(20, 1);
+	list.pushFront(56);
+	list.pushFront(46);
+
+	
 	list.print();
+	
 }
