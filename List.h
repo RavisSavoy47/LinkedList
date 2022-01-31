@@ -195,10 +195,17 @@ inline void List<T>::pushFront(const T& value)
 	/// sets node to be first
 	/// </summary>
 	Node<T>* node = new Node<T>(value);
-	
-	m_first->previous = node;
-	node->next = m_first;
+
+	if (m_first != nullptr)
+	{
+		m_first->previous = node;
+		node->next = m_first;
+	}
+
 	m_first = node;
+
+	if (m_last != nullptr) 
+		m_last = node;
 
 	m_nodeCount++;
 }
@@ -217,9 +224,16 @@ inline void List<T>::pushBack(const T& value)
 	/// </summary>
 	Node<T>* node = new Node<T>(value);
 
-	m_last->previous = node;
-	node->next = m_last;
+	if (m_last != nullptr)
+	{
+		m_last->next = node;
+		node->previous = m_last;
+	}
+
 	m_last = node;
+
+	if (m_first != nullptr)
+		m_first = node;
 
 	m_nodeCount++;
 }
@@ -333,10 +347,17 @@ inline bool List<T>::remove(const T& value)
 template<typename T>
 inline void List<T>::print() const
 {
-	if (m_nodeCount <= 0) return;
+	Node<T>* currentNode = m_first;
 
-	for (Iterator<T> iter = begin(); iter != end(); ++iter)
-		std::cout << *iter << std::endl;
+	for (int i = 0; i < getLength(); i++)
+	{
+		if (currentNode != nullptr)
+		{
+			std::cout << currentNode->data << std::endl;
+			currentNode = currentNode->next;
+		}
+	}
+		
 }
 
 /// <summary>
@@ -363,25 +384,32 @@ inline bool List<T>::isEmpty() const
 template<typename T>
 inline bool List<T>::getData(Iterator<T>& iter, int index)
 {
+	//checks if the index is greater than the node count
 	if (index < 0 || index >= m_nodeCount)
 		return false;
-
+	//iterates through the index
 	for (int i = 0; i < index; i++)
 		++iter;
-
 
 	return true;
 }
 
+/// <summary>
+/// gets the length of the node count
+/// </summary>
 template<typename T>
 inline int List<T>::getLength() const
 {
 	return m_nodeCount;
 }
 
+/// <summary>
+/// sets the operators equal to each other
+/// </summary>
 template<typename T>
 inline const List<T>& List<T>::operator=(const List<T>& otherList)
 {
+	destroy();
 	m_first = otherList.m_first;
 	m_last = otherList.m_last;
 }
@@ -389,5 +417,8 @@ inline const List<T>& List<T>::operator=(const List<T>& otherList)
 template<typename T>
 inline void List<T>::sort()
 {
+	Node<T>* currentNode = m_first;
+
 	//bubble scort
+	
 }
