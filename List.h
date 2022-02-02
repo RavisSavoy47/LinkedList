@@ -117,7 +117,7 @@ inline List<T>::List()
 template<typename T>
 inline List<T>::List(const List<T>& other)
 {
-	
+	*this = other;
 }
 
 /// <summary>
@@ -197,7 +197,7 @@ inline void List<T>::pushFront(const T& value)
 	m_first = node;
 
 	//sets nodes nexts previous to be node
-	if (m_first != nullptr)
+	if (m_last != nullptr)
 		node->next->previous = node;
 
 	else
@@ -236,43 +236,55 @@ inline void List<T>::pushBack(const T& value)
 template<typename T>
 inline bool List<T>::insert(const T& value, int index)
 {
-	if (index < 0 || index >= m_nodeCount)
-		return false;
+	bool nodeInsterted = false;
 
 	//creates a new node
 	//gets the oldNode to be the first
 	Node<T>* newNode = new Node<T>(value);
 	Node<T>* oldNode = m_first;
 
-	//iterates through the index
-	for (int i = 0; i < index; i++)
-	{
-		//sets the oldnode next to always be oldnode next
-		if (oldNode->next)
-			oldNode = oldNode->next;
-	}
-
-	//sets the oldnode previous next to be the newnode
-	if (oldNode->previous)
-		oldNode->previous->next = newNode;
-
-	/// <summary>
-	/// sets the newnodes previous to be the oldnode previous
-	/// sets the oldnode previous to be the newnode
-	/// sets the newnode next to be the oldnode
-	/// </summary>
-	newNode->previous = oldNode->previous;
-	oldNode->previous = newNode;
-	newNode->next = oldNode;
-
-	m_nodeCount++;
-
 	//sets the first to be the newnode
 	if (index == 0)
+	{
+		pushFront(value);
+		nodeInsterted = true;
+		return true;
+	}
 		m_first = newNode;
 	//sets the last to be newnode
-	else if (index == m_nodeCount - 1)
-		m_last = newNode;
+	if (index == m_nodeCount - 1)
+	{
+		pushBack(value);
+		nodeInsterted = true;
+		return true;
+	}
+
+	//if the index is in the bounds
+	if (index > 0 && index < getLength())
+	{
+		//loops through the index
+		for (int i = 0; i < index; i++)
+		{
+			//sets the oldnode next to always be oldnode next
+			if (oldNode->next)
+				oldNode = oldNode->next;
+		}
+
+		//sets the oldnode previous next to be the newnode
+		if (oldNode->previous)
+			oldNode = oldNode->previous->next;
+
+		/// sets the new nodes first and last
+		newNode->next = oldNode;
+		newNode->previous = oldNode->previous;
+		//sets the old nodes previous next
+		oldNode->previous->next = newNode;
+		//sets the old nodes previous
+		oldNode->previous = newNode;
+
+		m_nodeCount++;
+		nodeInsterted = true;
+	}
 
 	return true;
 }
@@ -402,8 +414,15 @@ template<typename T>
 inline const List<T>& List<T>::operator=(const List<T>& otherList)
 {
 	destroy();
-	m_first = otherList.m_first;
-	m_last = otherList.m_last;
+	Node<T>* otherCurrentNode = otherList.m_first;
+
+	for (int i = 0; i < otherList.m_nodeCount; i++)
+	{
+		insert(otherCurrentNode->data, i);
+		otherCurrentNode = otherCurrentNode->next;
+	}
+
+	return *this;
 }
 
 /// <summary>

@@ -1,4 +1,5 @@
 #include "List.h"
+#include <iostream>
 
 int main()
 {
@@ -12,9 +13,22 @@ int main()
 	list.pushFront(56);
 	list.pushFront(46);
 
-	list.remove(12);
-	list.remove(46);
-	
-	list.sort();
 	list.print();
+
+	std::cout << std::endl;
+
+	list.remove(10);
+	list.remove(46);
+	//list.sort();
+	list.print();
+
+	std::cout << std::endl;
+
+	List<int> list2 = List<int>();
+	
+	list2 = list;
+
+	list2.print();
+
+	
 }
