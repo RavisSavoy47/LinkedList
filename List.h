@@ -310,10 +310,10 @@ inline bool List<T>::remove(const T& value)
 
 			//sets the last to be the nodes next
 			if (nodeToRemove == m_last)
-				m_last = nodeToRemove->next;
+				m_last = nodeToRemove->previous;
 			//sets the first to be the nodes previous
 			else if (nodeToRemove == m_first)
-				m_first = nodeToRemove->previous;
+				m_first = nodeToRemove->next;
 
 			nodeisRemoved = true;
 			break;
