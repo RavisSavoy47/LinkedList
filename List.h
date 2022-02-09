@@ -109,6 +109,7 @@ private:
 template<typename T>
 inline List<T>::List()
 {
+	//creates an empty list
 	m_nodeCount = 0;
 	m_first = nullptr;
 	m_last = nullptr;
@@ -117,7 +118,10 @@ inline List<T>::List()
 template<typename T>
 inline List<T>::List(const List<T>& other)
 {
-	*this = other;
+	//creates a list with the other values
+	m_first = other.m_first;
+	m_last = other.m_last;
+	m_nodeCount = other.getLength();
 }
 
 /// <summary>
@@ -135,12 +139,15 @@ inline List<T>::~List()
 template<typename T>
 inline void List<T>::destroy()
 {
-	//makes a new node and a temp and removes the temp 
-	for (Node<T>* iter = m_first; iter != nullptr;)
+	Node<T>* currentNode = m_first;
+	Node<T>* nextNode;
+
+	for (int i = 0; i < getLength(); i++)
 	{
-		Node<T>* temp = iter;
-		iter = iter->next;
-		delete temp;
+		nextNode = currentNode->next;
+		delete currentNode;
+		m_nodeCount--;
+		currentNode = nextNode;
 	}
 	
 	//resets the values
@@ -366,7 +373,10 @@ inline void List<T>::intialize()
 template<typename T>
 inline bool List<T>::isEmpty() const
 {
-	return m_nodeCount <= 0;
+	if (m_first == nullptr && m_last == nullptr && m_nodeCount == 0)
+		return true;
+	else
+		return false;
 }
 
 /// <summary>
@@ -379,8 +389,17 @@ inline bool List<T>::getData(Iterator<T>& iter, int index)
 	if (index < 0 || index >= m_nodeCount)
 		return false;
 	//iterates through the index
-	for (int i = 0; i < index; i++)
-		++iter;
+	Iterator<T> tempIterator = begin();
+
+	for (int i = 0; i < getLength(); i++)
+	{
+		if (tempIterator == iter)
+		{
+			++iter;
+		}
+		++tempIterator;
+	}
+
 
 	return true;
 }

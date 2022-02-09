@@ -12,20 +12,23 @@ int main()
 	list.insert(20, 1);
 	list.pushFront(56);
 	list.pushFront(46);
+	list.sort();
 
 	list.print();
 
 	std::cout << std::endl;
 
-	list.remove(10);
-	list.remove(46);
-	//list.sort();
+	list.destroy();
+	list.destroy();
+	list.insert(24, 0);
+	list.insert(55, 1);
+	list.pushBack(55);
+	list.pushFront(24);
 	list.print();
 
 	std::cout << std::endl;
 
-	List<int> list2 = List<int>();
-	
+	List<int> list2;
 	list2 = list;
 
 	list2.print();

@@ -20,6 +20,7 @@ inline Node<T>::Node()
 {
 	next = nullptr; 
 	previous = nullptr;
+	data = 0;
 }
 
 /// <summary>
@@ -30,6 +31,4 @@ template<typename T>
 inline Node<T>::Node(T value)
 {
 	data = value;
-	next = nullptr;
-	previous = nullptr;
 }
