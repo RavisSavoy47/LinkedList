@@ -22,8 +22,6 @@ int main()
 	list.destroy();
 	list.insert(24, 0);
 	list.insert(55, 1);
-	list.pushBack(55);
-	list.pushFront(24);
 	list.print();
 
 	std::cout << std::endl;

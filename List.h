@@ -243,44 +243,38 @@ inline void List<T>::pushBack(const T& value)
 template<typename T>
 inline bool List<T>::insert(const T& value, int index)
 {
-	if (index < 0 || index >= m_nodeCount)
-		return false;
-
-	//creates a new node
-	//gets the oldNode to be the first
+	bool nodeInserted = false;
 	Node<T>* newNode = new Node<T>(value);
-	Node<T>* oldNode = m_first;
-
-	//sets the first to be the newnode
-	if (index == 0)
-		m_first = newNode;
-	//sets the last to be newnode
-	else if (index == m_nodeCount - 1)
-		m_last = newNode;
-
-	//iterates through the index
-	for (int i = 0; i < index; i++)
-	{
-		//sets the oldnode next to always be oldnode next
-		if (oldNode->next)
-			oldNode = oldNode->next;
+	Node<T>* currentNode = m_first;
+	// If the index is not within the current length...
+	if (index > getLength())
+		// ...it returns false.
+		return nodeInserted;
+	// If the index is zero...
+	if (index == 0) {
+		// ...it pushes the value to the front of the list.
+		pushFront(value);
+		return true;
+	}
+	// If the index is the same as the node count...
+	else if (index == m_nodeCount) {
+		// ...it pushes the value to the back of the list.
+		pushBack(value);
+		return true;
 	}
 
-	//sets the oldnode previous next to be the newnode
-	/*if (oldNode->previous)
-		oldNode->previous->next = newNode;*/
+	// Iterates through the list of node until it reaches the specified index.
+	for (int i = 0; i < index; i++)
+		currentNode = currentNode->next;
 
-	/// sets the new nodes first and last
-	newNode->next = oldNode;
-	newNode->previous = oldNode->previous;
-	//sets the old nodes previous next
-	oldNode->previous->next = newNode;
-	//sets the old nodes previous
-	oldNode->previous = newNode;
+	// Insert the new node into the space where the current node was.
+	newNode->next = currentNode;
+	newNode->previous = currentNode->previous;
+	currentNode->previous->next = newNode;
+	currentNode->previous = newNode;
 
 	m_nodeCount++;
-
-	return true;
+	return nodeInserted;
 }
 
 /// <summary>
@@ -386,12 +380,12 @@ template<typename T>
 inline bool List<T>::getData(Iterator<T>& iter, int index)
 {
 	//checks if the index is greater than the node count
-	if (index < 0 || index >= m_nodeCount)
+	if (index > m_nodeCount)
 		return false;
 	//iterates through the index
 	Iterator<T> tempIterator = begin();
 
-	for (int i = 0; i < getLength(); i++)
+	for (int i = 0; i < index; i++)
 	{
 		if (tempIterator == iter)
 		{
@@ -427,7 +421,6 @@ inline const List<T>& List<T>::operator=(const List<T>& otherList)
 		insert(otherCurrentNode->data, i);
 		otherCurrentNode = otherCurrentNode->next;
 	}
-
 	return *this;
 }
 
