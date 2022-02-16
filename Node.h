@@ -24,7 +24,6 @@ inline Node<T>::Node()
 }
 
 /// <summary>
-/// sets the next and previous to a null pointer
 /// sets the data to be the values
 /// </summary>
 template<typename T>

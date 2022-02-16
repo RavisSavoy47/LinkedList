@@ -11,7 +11,7 @@ public:
 	~List();
 
 	/// <summary>
-	/// Delets all nodes in the list
+	/// Deletes all nodes in the list
 	/// </summary>
 	void destroy();
 
@@ -91,8 +91,14 @@ public:
 	/// <returns></returns>
 	int getLength() const;
 
+	/// <summary>
+	/// sets the operators equal to each other
+	/// </summary>
 	const List<T>& operator=(const List<T>& otherList);
 
+	/// <summary>
+	/// Using bubble sort to sort the list
+	/// </summary>
 	void sort();
 
 private:
