@@ -31,5 +31,12 @@ int main()
 
 	list2.print();
 
-	
+	list.destroy();
+	list2.destroy();
+
+	list.insert(10, -1);
+	list2.insert(12, -1);
+
+	list.print();
+	list2.print();
 }

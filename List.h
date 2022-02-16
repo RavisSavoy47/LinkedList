@@ -246,28 +246,30 @@ inline bool List<T>::insert(const T& value, int index)
 	bool nodeInserted = false;
 	Node<T>* newNode = new Node<T>(value);
 	Node<T>* currentNode = m_first;
-	// If the index is not within the current length...
-	if (index > getLength())
-		// ...it returns false.
+	//if the index is not within the current length
+	if (index > getLength() || index < getLength())
+		// it returns false.
 		return nodeInserted;
-	// If the index is zero...
-	if (index == 0) {
-		// ...it pushes the value to the front of the list.
+	//if the index is zero
+	if (index == 0)
+	{
+		//it pushes the value to the front of the list
 		pushFront(value);
 		return true;
 	}
-	// If the index is the same as the node count...
-	else if (index == m_nodeCount) {
-		// ...it pushes the value to the back of the list.
+	//if the index is the same as the node count
+	else if (index == m_nodeCount) 
+	{
+		// it pushes the value to the back of the list
 		pushBack(value);
 		return true;
 	}
 
-	// Iterates through the list of node until it reaches the specified index.
+	// iterates through the list of node until it reaches the specified index
 	for (int i = 0; i < index; i++)
 		currentNode = currentNode->next;
 
-	// Insert the new node into the space where the current node was.
+	//insert the new node into the space where the current node was
 	newNode->next = currentNode;
 	newNode->previous = currentNode->previous;
 	currentNode->previous->next = newNode;
@@ -382,7 +384,7 @@ inline bool List<T>::getData(Iterator<T>& iter, int index)
 	//checks if the index is greater than the node count
 	if (index > m_nodeCount)
 		return false;
-	//iterates through the index
+	//creates a temp iterator
 	Iterator<T> tempIterator = begin();
 
 	for (int i = 0; i < index; i++)
