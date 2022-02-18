@@ -1,5 +1,7 @@
 ## LinkedLists
 
+This project is to demonstarte the understanding of to use a collectuion of nodes to be used in a sequence and to test the data by sorting them. 
+
 ### Tests in order
 - Added numbers to the list
 - Tested the sorting
