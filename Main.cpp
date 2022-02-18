@@ -12,7 +12,11 @@ int main()
 	list.insert(20, 1);
 	list.pushFront(56);
 	list.pushFront(46);
+	list.print();
+
 	list.sort();
+	
+	std::cout << std::endl;
 
 	list.print();
 
