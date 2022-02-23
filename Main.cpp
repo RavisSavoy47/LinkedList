@@ -13,13 +13,13 @@ int main()
 	list.pushFront(56);
 	list.pushFront(46);
 	list.print();
-
+	system("pause");
 	list.sort();
-	
+
 	std::cout << std::endl;
 
 	list.print();
-
+	system("pause");
 	std::cout << std::endl;
 
 	list.destroy();
@@ -27,14 +27,14 @@ int main()
 	list.insert(24, 0);
 	list.insert(55, 1);
 	list.print();
-
+	system("pause");
 	std::cout << std::endl;
 
 	List<int> list2;
 	list2 = list;
 
 	list2.print();
-
+	system("pause");
 	list.destroy();
 	list2.destroy();
 
@@ -43,4 +43,5 @@ int main()
 
 	list.print();
 	list2.print();
+	system("pause");
 }
