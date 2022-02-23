@@ -13,7 +13,9 @@ int main()
 	list.pushFront(56);
 	list.pushFront(46);
 	list.print();
+
 	system("pause");
+
 	list.sort();
 
 	std::cout << std::endl;
