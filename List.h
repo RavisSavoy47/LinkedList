@@ -249,39 +249,56 @@ inline void List<T>::pushBack(const T& value)
 template<typename T>
 inline bool List<T>::insert(const T& value, int index)
 {
+	//create a bool to return
 	bool nodeInserted = false;
+
+	//creates two temp values to insert the new node
 	Node<T>* newNode = new Node<T>(value);
 	Node<T>* currentNode = m_first;
-	//if the index is not within the current length
-	if (index > getLength() || index < getLength())
-		// it returns false.
-		return nodeInserted;
+
 	//if the index is zero
 	if (index == 0)
 	{
 		//it pushes the value to the front of the list
 		pushFront(value);
+		nodeInserted = true;
 		return true;
 	}
 	//if the index is the same as the node count
-	else if (index == m_nodeCount) 
+	else if (index == getLength()) 
 	{
 		// it pushes the value to the back of the list
 		pushBack(value);
+		nodeInserted = true;
 		return true;
 	}
 
-	// iterates through the list of node until it reaches the specified index
-	for (int i = 0; i < index; i++)
-		currentNode = currentNode->next;
+	//If the index is within the bounds
+	if (index > 0 && index < getLength())
+	{
+		//Loop through the list to get the the index
+		for (int i = 0; i < index; i++)
+		{
+			//Setting the current node to be the next every time
+			if (currentNode->next)
+			{
+				currentNode = currentNode->next;
+			}
+		}
 
-	//insert the new node into the space where the current node was
-	newNode->next = currentNode;
-	newNode->previous = currentNode->previous;
-	currentNode->previous->next = newNode;
-	currentNode->previous = newNode;
+		//Set the new nodes next and previous
+		newNode->next = currentNode;
+		newNode->previous = currentNode->previous;
+		//Set the current nodes previous next
+		currentNode->previous->next = newNode;
+		//Set the current nodes previous
+		currentNode->previous = newNode;
 
-	m_nodeCount++;
+		//Increase the node count and sets the bool to be true
+		m_nodeCount++;
+		nodeInserted = true;
+	}
+
 	return nodeInserted;
 }
 
@@ -387,21 +404,19 @@ inline bool List<T>::isEmpty() const
 template<typename T>
 inline bool List<T>::getData(Iterator<T>& iter, int index)
 {
-	//checks if the index is greater than the node count
-	if (index > m_nodeCount)
+	//if the index is outside of the bounds return false
+	if (index <= 0 || index > getLength())
 		return false;
-	//creates a temp iterator
-	Iterator<T> tempIterator = begin();
 
+	//creates a temp iterator
+	iter = begin();
+
+	//for the number of the index
 	for (int i = 0; i < index; i++)
 	{
-		if (tempIterator == iter)
-		{
-			++iter;
-		}
-		++tempIterator;
+		//iterate through the iter until it finds the right node
+		++iter;
 	}
-
 
 	return true;
 }

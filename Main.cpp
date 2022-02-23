@@ -15,7 +15,7 @@ int main()
 	list.print();
 
 	system("pause");
-
+	list.insert(2, 2);
 	list.sort();
 
 	std::cout << std::endl;
